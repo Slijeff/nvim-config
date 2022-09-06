@@ -1,10 +1,8 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-
 -- 保存本地变量
 local map = vim.api.nvim_set_keymap
-local opt = {noremap = true, silent = true }
-
+local opt = { noremap = true, silent = true }
 -- 之后就可以这样映射按键了
 -- map('模式','按键','映射为XX',opt)
 
@@ -28,9 +26,10 @@ map("n", "<A-l>", "<C-w>l", opt)
 --插件快捷键
 
 -- Telescope
-map("n", "<C-p>", ":Telescope find_files<CR>", opt)
-map("n", "<leader>f", ":Telescope find_files<CR>", opt)
-map("n", "<leader>g", ":Telescope live_grep<CR>", opt)
+map("n", "<leader>ff", ":Telescope find_files<CR>", opt)
+map("n", "<leader>gg", ":Telescope live_grep<CR>", opt)
+map("n", "<leader>pp", ":Telescope project<CR>", opt)
+
 
 -- nvimTree
 map('n', '<C-f>', ':NvimTreeToggle<CR>', opt)
@@ -40,7 +39,8 @@ map("n", "<C-h>", ":BufferLineCyclePrev<CR>", opt)
 map("n", "<C-l>", ":BufferLineCycleNext<CR>", opt)
 map("n", "q", ":bp <BAR> bd #<CR>", opt)
 
-
+-- terminal mode exit
+map("t", "<Esc>", "<C-\\><C-n>", opt)
 
 pluginKeys = {}
 
@@ -50,7 +50,7 @@ pluginKeys.comment = {
 
 -- lsp 快捷键设置
 pluginKeys.maplsp = function(mapbuf)
-    -- rename
+  -- rename
   mapbuf('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opt)
   -- code action
   mapbuf('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opt)
@@ -76,29 +76,29 @@ end
 
 -- nvim-cmp 自动补全
 pluginKeys.cmp = function(cmp)
-    return {
-      -- 上一个
-      ['<C-k>'] = cmp.mapping.select_prev_item(),
-      -- 下一个
-      ['<C-j>'] = cmp.mapping.select_next_item(),
-      -- 出现补全
-      ['<A-.>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-      -- 取消
-      ['<A-,>'] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-      }),
-      -- 确认
-      -- Accept currently selected item. If none selected, `select` first item.
-      -- Set `select` to `false` to only confirm explicitly selected items.
-      ['<Tab>'] = cmp.mapping.confirm({
-        select = true ,
-        behavior = cmp.ConfirmBehavior.Replace
-      }),
-      -- ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-      ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-      ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-    }
-  end
+  return {
+    -- 上一个
+    ['<Up>'] = cmp.mapping.select_prev_item(),
+    -- 下一个
+    ['<Down>'] = cmp.mapping.select_next_item(),
+    -- 出现补全
+    ['<A-.>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+    -- 取消
+    ['<A-,>'] = cmp.mapping({
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
+    }),
+    -- 确认
+    -- Accept currently selected item. If none selected, `select` first item.
+    -- Set `select` to `false` to only confirm explicitly selected items.
+    ['<Tab>'] = cmp.mapping.confirm({
+      select = true,
+      behavior = cmp.ConfirmBehavior.Replace
+    }),
+    -- ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+    ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+    ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+  }
+end
 
 return pluginKeys

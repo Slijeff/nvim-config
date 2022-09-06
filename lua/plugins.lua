@@ -51,4 +51,7 @@ return require('packer').startup(function()
     }
     -- nvim-autopairs
     use "windwp/nvim-autopairs"
+    use "EdenEast/nightfox.nvim" -- Packer
+    -- toggleterm
+    use {"akinsho/toggleterm.nvim", tag = '*'} 
   end)
